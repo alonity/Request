@@ -15,20 +15,19 @@ $request = new Request();
 $request->setURI($_SERVER['REQUEST_URI']);
 
 // Send post
-$post = $request->post('https://google.com', ['param1' => 'example', 'param2' => 'test'], ['timeout' => 2]);
+$post = $request::post('https://google.com', ['param1' => 'example', 'param2' => 'test'], ['timeout' => 2]);
+
+var_dump($post->send());
 
 // Send get
-$post = $request->get('https://google.com', ['param1' => 'example', 'param2' => 'test'], ['timeout' => 1]);
+$get = $request::get('https://google.com', ['param1' => 'example', 'param2' => 'test'], ['timeout' => 1]);
+
+var_dump($get->send());
 
 // Send multiple
-$post = $request->getStack([
-    'https://google.com',
-    'https://youtube.com'
-], [
-    ['param1' => 'google', 'param2' => 'test'],
-    ['param1' => 'youtube', 'param2' => 'test']
-], [
-    ['timeout' => 1],
-    ['timeout' => 5]
-]);
+$stack = $request::stack([$get, $post]);
+
+foreach($stack->send() as $handler){
+    var_dump($handler->getResponse());
+}
 ```

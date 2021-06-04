@@ -89,10 +89,7 @@ class Handler {
         return $this->options[$key] ?? null;
     }
 
-    /**
-     * @return Handler[]
-     */
-    public function getResponse() : array {
+    public function getResponse(){
         return $this->response;
     }
 
@@ -102,10 +99,7 @@ class Handler {
         return $this;
     }
 
-    /**
-     * @return Handler[]
-    */
-    public function send() : array {
+    public function send(){
         $url = $this->url;
 
         if($this->method == 'GET'){

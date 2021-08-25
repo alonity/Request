@@ -12,7 +12,7 @@
  *
  * @license MIT
  *
- * @version 1.0.0
+ * @version 1.0.1
  *
  */
 
@@ -105,14 +105,14 @@ class Handler {
         if($this->method == 'GET'){
             $parse = parse_url($this->url);
 
-            $url = "{$parse['scheme']}://{$parse['host']}";
+            $url = "{$parse['scheme']}://{$parse['host']}{$parse['path']}";
 
             parse_str($parse['query'], $query);
 
             $data = array_merge_recursive($query, $this->params);
 
             if(!empty($data)){
-                $url .= '/?'.http_build_query($data);
+                $url .= '?'.http_build_query($data);
             }
         }
 
@@ -123,6 +123,7 @@ class Handler {
         $v = Request::VERSION;
 
         $opts = [
+            CURLOPT_CUSTOMREQUEST => $this->method,
             CURLOPT_RETURNTRANSFER => true,
             CURLOPT_AUTOREFERER => true,
             CURLOPT_FOLLOWLOCATION => true,

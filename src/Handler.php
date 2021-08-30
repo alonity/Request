@@ -12,7 +12,7 @@
  *
  * @license MIT
  *
- * @version 1.0.1
+ * @version 1.0.2
  *
  */
 
@@ -105,9 +105,13 @@ class Handler {
         if($this->method == 'GET'){
             $parse = parse_url($this->url);
 
-            $url = "{$parse['scheme']}://{$parse['host']}{$parse['path']}";
+            $path = $parse['path'] ?? '';
 
-            parse_str($parse['query'], $query);
+            $url = "{$parse['scheme']}://{$parse['host']}{$path}";
+
+            $q = $parse['query'] ?? '';
+
+            parse_str($q, $query);
 
             $data = array_merge_recursive($query, $this->params);
 

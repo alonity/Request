@@ -12,7 +12,7 @@
  *
  * @license MIT
  *
- * @version 1.0.2
+ * @version 1.0.3
  *
  */
 
@@ -137,6 +137,10 @@ class Handler {
             CURLOPT_MAXREDIRS => $this->options['redirects'] ?? 3,
             CURLOPT_USERAGENT => $this->options['useragent'] ?? "Curl/{$curlv['version']} (Alonity Request/{$v})"
         ];
+
+        if(isset($this->options['header'])){
+            $opts[CURLOPT_HEADER] = $this->options['header'];
+        }
 
         if($this->method == 'POST'){
             $opts[CURLOPT_POSTFIELDS] = http_build_query($this->params);

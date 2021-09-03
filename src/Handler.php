@@ -12,7 +12,7 @@
  *
  * @license MIT
  *
- * @version 1.0.4
+ * @version 1.0.3
  *
  */
 
@@ -20,7 +20,7 @@ namespace alonity\request;
 
 class Handler {
 
-    private $method, $url, $params, $options, $response, $protocol;
+    private $method, $url, $params, $options, $response;
 
     public function __construct(string $method, string $url, array $params = [], array $options = []){
         $this->setMethod(strtoupper($method))
@@ -97,24 +97,6 @@ class Handler {
         $this->response = $data;
 
         return $this;
-    }
-
-    public function setProtocol(string $protocol) : self {
-        $this->protocol = $protocol;
-
-        return $this;
-    }
-
-    public function getProtocol() : string {
-        if(!is_null($this->protocol)){ return $this->protocol; }
-
-        if(isset($_SERVER['HTTPS']) && filter_var($_SERVER['HTTPS'], FILTER_VALIDATE_BOOLEAN)){ $this->setProtocol('https'); return 'https'; }
-
-        if(isset($_SERVER['HTTP_X_FORWARDED_PROTO']) && strtolower($_SERVER['HTTP_X_FORWARDED_PROTO']) == 'https'){ $this->setProtocol('https'); return 'https'; }
-
-        $this->setProtocol('http');
-
-        return 'http';
     }
 
     public function send(){

@@ -12,7 +12,7 @@
  *
  * @license MIT
  *
- * @version 1.0.0
+ * @version 1.1.0
  *
  */
 
@@ -22,9 +22,9 @@ use alonity\router\RequestInheritance;
 use alonity\router\RequestInterface;
 
 class Request extends RequestInheritance {
-    private $uri;
+    private $uri, $useragent;
 
-    const VERSION = '1.0.0';
+    const VERSION = '1.1.0';
 
     /**
      * Set URI string
@@ -48,6 +48,32 @@ class Request extends RequestInheritance {
         $this->uri = parent::getURI();
 
         return $this->uri;
+    }
+
+    /**
+     * Set user agent string
+     *
+     * @param string|null $useragent
+     *
+     * @return self
+     */
+    public function setUserAgent(?string $useragent) : RequestInterface {
+        $this->useragent = $useragent;
+
+        return $this;
+    }
+
+    /**
+     * Get user agent string
+     *
+     * @return string|null
+     */
+    public function getUserAgent(): ?string {
+        if(!is_null($this->useragent)){ return $this->useragent; }
+
+        $this->useragent = $_SERVER['HTTP_USER_AGENT'] ?? '';
+
+        return $this->useragent;
     }
 
     /**

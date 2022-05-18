@@ -6,13 +6,13 @@
  *
  * @author Qexy admin@qexy.org
  *
- * @copyright © 2021 Alonity
+ * @copyright © 2022 Alonity
  *
  * @package alonity\request
  *
  * @license MIT
  *
- * @version 1.0.3
+ * @version 1.1.0
  *
  */
 
@@ -145,6 +145,13 @@ class Handler {
         if($this->method == 'POST'){
             $opts[CURLOPT_POSTFIELDS] = http_build_query($this->params);
         }
+
+        if(isset($this->options['custom'])){
+            foreach($this->options['custom'] as $k => $v){
+                $opts[$k] = $v;
+            }
+        }
+
 
         curl_setopt_array($c, $opts);
 
